@@ -1,10 +1,7 @@
-import math
-import random
 import urllib.request
-import time
 
 
-def onlineRandom(low=0,high=255,num=1000):
+def onlineRandom(low=2**25,high=2**28,num=1000):
     url = 'https://www.random.org/integers/?num={}&min={}&max={}&col=1&base=10&format=plain&rnd=new'.format(num,low,high)
 
     with urllib.request.urlopen(url) as response:

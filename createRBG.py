@@ -31,29 +31,32 @@ def getPixelMatrix():
     gPix = []
     bPix = []
 
-    # Generate 1000 random numbers with min val 2^25 (we need at least 24 bits in each number for 3 8-bit rgb values)
-    randomInts = random.sample(range(2**25,2**28),1000) #use this for testing
-    #randomInts = onlineRandom(2**25,2**28,1000) #use this is actual implementation
+    # Generate 1000 random numbers with min val 2^25 (we need at least 24 bits in each number for getRandom8bits func)
+    #randomInts = random.sample(range(2**25,2**28),1000) #use this for testing to avoid timeout from random.org
+    randomInts = onlineRandom(2**25,2**28,1000)  #use this in actual implementation
 
     while len(rPix) < (128*128):
         rPix.append(getRandom8bits(randomInts))
         gPix.append(getRandom8bits(randomInts))
         bPix.append(getRandom8bits(randomInts))
 
-    matrix = [rPix, gPix, bPix]
-    return matrix
+    pixelMatrix = [rPix, gPix, bPix]
+    return pixelMatrix
 
-matrix = getPixelMatrix()
-#print(len(matrix[1]))
+def createImage():
+    matrix = getPixelMatrix()
 
-#PIL accesses images in Cartesian co-ordinates, so it is Image[columns, rows]
-img = Image.new( 'RGB', (128,128), "black") # create a new black image
-pixels = img.load() # create the pixel map
+    # Used template from https://en.wikibooks.org/wiki/Python_Imaging_Library/Editing_Pixels
+    img = Image.new( 'RGB', (128,128), "black") # create a new black image
+    pixels = img.load() # create the pixel map
 
-idx = 0
-for i in range(img.size[0]):    # for every col:
-    for j in range(img.size[1]):    # For every row
-        pixels[i,j] = (matrix[0][idx], matrix[1][idx], matrix[2][idx]) # set the colour accordingly
-        idx += 1
+    idx = 0
+    for i in range(img.size[0]):    # for every col:
+        for j in range(img.size[1]):    # For every row
+            pixels[i,j] = (matrix[0][idx], matrix[1][idx], matrix[2][idx]) # set the colour accordingly
+            idx += 1
 
-img.show()
+    img.show()
+    img.save("random.jpg")
+
+createImage()
