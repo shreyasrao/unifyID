@@ -2,7 +2,7 @@
 
 randomORG.py has the function onlineRandom() which is used to grab random integers from random.org
 
-createRBG.py uses the random integers to generate 128 x 128 RGB picture
+createRGB.py uses the random integers to generate 128 x 128 RGB picture
 
 ## Details
 
